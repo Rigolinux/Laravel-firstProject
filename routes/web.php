@@ -16,6 +16,11 @@ use App\Http\Controllers\TestController;
 
 Route::get("/test",[TestController::class,'test']);
 
+
+Route::get('/', [\App\Http\Controllers\TextControler:: class,'index']);
+/*
+Route::get("/test",[TestController::class,'test']);
+
 Route::get('/', function () {
     return view('welcome2');
 });
@@ -33,7 +38,7 @@ Route::get('/custom',function() {
     return view('custom',['msj'=>$custom]);
 });
 
-
+*/
 
 
 
