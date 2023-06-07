@@ -8,6 +8,9 @@
     <title>Document</title>
 </head>
 <body>
+ {{-- add components --}}
+@include('fragments.subview')
+
     {{ $name }}
 
 

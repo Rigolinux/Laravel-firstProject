@@ -12,8 +12,10 @@ class TextControler extends Controller
      */
     public function index()
     {
+        $array =['uno','dos','tres'];
+        $name = 'Jorge';
         //
-        return view('index',['name'=>'Rigo', 'age'=>20, 'city'=>'Bogota','html'=>'<h2>HTML</h2>','array'=>['uno','dos','tres'] ]);
+        return view('test/index',compact('array','name'));
     }
 
     /**
