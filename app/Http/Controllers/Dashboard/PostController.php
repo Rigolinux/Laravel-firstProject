@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Post;
+use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -12,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        return 'index';
     }
 
     /**
@@ -20,7 +22,12 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+     //the next function is valid but we need to use the model Post
+     // $categories = Category::get();
+     
+    //another way to use the model Post is with pluck
+      $categories = Category::pluck('id','name');
+      return view('dashboard.posts.create',compact('categories'));
     }
 
     /**
@@ -28,13 +35,25 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // uses dd to see the data that we are sending
+        //dd($request->all());
+        //dd($request->title);
+        // another way to get the data from the request
+        // $request->title;
+
+        // save in the database
+        $data = array_merge($request->all(),['image'=>''
+        ]);
+
+        Post::create($data);
+
+        return redirect()->back();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
         //
     }
@@ -42,7 +61,7 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
         //
     }
@@ -50,7 +69,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Post $post)
     {
         //
     }
@@ -58,7 +77,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
         //
     }

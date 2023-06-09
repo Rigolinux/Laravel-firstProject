@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\Dashboard\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +14,27 @@ use App\Http\Controllers\TestController;
 |
 */
 
-Route::get("/test",[TestController::class,'test']);
+
+//create route for dashboard all routes
+// this case is more easy to use but we need to use all the routes
+Route::resource('post', PostController::class);
+
+//create route for dashboard all routes includes in one resource its like the above
+// but we can use only the routes that we need or we can use all of them
+
+/* Route::get('post', [PostController::class, 'index'])->name('post.index');
+Route::get('post/{post}', [PostController::class, 'show'])->name('post.show');
+Route::get('post/create',[PostController::class, 'show'])->name('post.create');
+Route::post('post',[PostController::class, 'store'])->name('post.store');
+Route::put('post/{post}',[PostController::class, 'update'])->name('post.update');
+Route::delete('post/{post}',[PostController::class, 'update'])->name('post.delete');
+ */
 
 
-Route::get('/', [\App\Http\Controllers\TextControler:: class,'index']);
+//Route::get("/test",[TestController::class,'test']);
+
+
+//Route::get('/', [\App\Http\Controllers\TextControler:: class,'index']);
 /*
 Route::get("/test",[TestController::class,'test']);
 
