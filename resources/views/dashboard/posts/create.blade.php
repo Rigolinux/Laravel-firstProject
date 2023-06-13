@@ -8,7 +8,15 @@
 </head>
 <body>
     <h1>Create Post</h1>
+    {{-- show errors form--}}
 
+     @if($errors-> any())
+     @foreach ($errors->all() as $error)
+         <div class="error">
+             <p>{{$error}}</p>
+         </div>
+        @endforeach
+        @endif
     <form action="{{route('post.store')}}"  method="POST">
         {{--laravel requieres a csrfthis a internal token to validate any request and can be protect
             for cyber attacks like cross site request forgery (CSRF)

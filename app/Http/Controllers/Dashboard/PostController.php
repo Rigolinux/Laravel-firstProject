@@ -5,10 +5,15 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Post;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePostRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
+
+    
+
     /**
      * Display a listing of the resource.
      */
@@ -33,6 +38,7 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    //use storePostRequest to validate the data
     public function store(Request $request)
     {
         // uses dd to see the data that we are sending
@@ -40,6 +46,18 @@ class PostController extends Controller
         //dd($request->title);
         // another way to get the data from the request
         // $request->title;
+
+        // validate the data another way
+        $validatedData = $request->validate(StorePostRequest::rules() );
+
+        // another way to validate the data with validator
+        $validator = Validator::make($request->all(),StorePostRequest::rules() );
+
+        // if the validation fails
+        dd($validator->fails());
+
+        // if i want to get the errors
+        dd($validator->errors());
 
         // save in the database
         $data = array_merge($request->all(),['image'=>''
