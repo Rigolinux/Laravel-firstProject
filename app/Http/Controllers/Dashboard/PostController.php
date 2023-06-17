@@ -6,8 +6,10 @@ use App\Models\Post;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\StorePutRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
 
 class PostController extends Controller
 {
@@ -19,7 +21,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        return 'index';
+        // get all the posts
+        //$posts = Post::get();
+        // get all the posts with paginate
+        $posts = Post::paginate(1);
+        echo view('dashboard.posts.index',compact('posts'));
     }
 
     /**
@@ -39,7 +45,7 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      */
     //use storePostRequest to validate the data
-    public function store(Request $request)
+    public function store(storePostRequest $request)
     {
         // uses dd to see the data that we are sending
         //dd($request->all());
@@ -50,21 +56,25 @@ class PostController extends Controller
         // validate the data another way
         $validatedData = $request->validate(StorePostRequest::rules() );
 
+        //create an automatic slug
+        //$request->merge(['slug'=>str_slug($request->title)]);
+
+
         // another way to validate the data with validator
-        $validator = Validator::make($request->all(),StorePostRequest::rules() );
+        //$validator = Validator::make($request->all(),StorePostRequest::rules() );
 
         // if the validation fails
-        dd($validator->fails());
+       // dd($validator->fails());
 
         // if i want to get the errors
-        dd($validator->errors());
+        //dd($validator->errors());
 
         // save in the database
-        $data = array_merge($request->all(),['image'=>''
-        ]);
+       /*  $data = array_merge($request->all(),['image'=>''
+        ]); */
 
-        Post::create($data);
-
+        Post::create($validatedData);
+        
         return redirect()->back();
     }
 
@@ -81,15 +91,16 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $categories = Category::pluck('id','name');
+        return view('dashboard.posts.edit',compact('post','categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(StorePutRequest $request, Post $post)
     {
-        //
+        $post->update($request->validated());
     }
 
     /**

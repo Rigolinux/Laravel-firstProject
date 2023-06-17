@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('title', 255)->nullable(false);
             $table->string('slug', 255)->nullable(false);
-            $table->text('content');
-            $table->string('image');
+            $table->text('content')->nullable();
+            $table->string('image')->nullable();
             $table->enum("posted", ["yes", "no"])->default("no");
             $table->timestamps();
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            
         });
     }
 

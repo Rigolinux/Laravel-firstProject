@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
-class StorePostRequest extends FormRequest
+class StorePutRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,15 +15,7 @@ class StorePostRequest extends FormRequest
         return true;
     }
 
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'slug' => Str::slug($this->title),
-            // i can also concatenate the slug with the id or combane weith Str::of
-            // 'slug' => Str::slug($this->title).'-'.$this->id,
-            // 'slug' => Str::of($this->title)->slug()->append('-'.$this->id),
-                ]);
-    }
+    
 
     /**
      * Get the validation rules that apply to the request.
@@ -34,7 +26,7 @@ class StorePostRequest extends FormRequest
     {
         return [
             'title' => 'required|min:5|max:255',
-            'slug' => 'min:5|max:255|unique:posts,slug',
+            //'slug' => 'min:5|max:255|unique:posts,slug',
             'content' => 'required|min:5',
             'category_id' => 'required|integer',
             'posted' => 'required',
