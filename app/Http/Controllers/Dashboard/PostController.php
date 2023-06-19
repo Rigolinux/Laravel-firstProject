@@ -38,7 +38,8 @@ class PostController extends Controller
      
     //another way to use the model Post is with pluck
       $categories = Category::pluck('id','name');
-      return view('dashboard.posts.create',compact('categories'));
+      $post = new Post();
+      return view('dashboard.posts.create',compact('categories','post'));
     }
 
     /**
@@ -75,7 +76,7 @@ class PostController extends Controller
 
         Post::create($validatedData);
         
-        return redirect()->back();
+        return to_route('post.index');
     }
 
     /**
@@ -84,6 +85,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         //
+        return view('dashboard.posts.show',compact('post'));
     }
 
     /**
@@ -101,6 +103,8 @@ class PostController extends Controller
     public function update(StorePutRequest $request, Post $post)
     {
         $post->update($request->validated());
+        return to_route('post.index');
+        
     }
 
     /**
@@ -109,5 +113,8 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+        $post->delete();
+        return to_route('post.index');
+
     }
 }
