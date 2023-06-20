@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\PostController;
+use App\Http\Controllers\Dashboard\CategoryController;
+use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,8 @@ use App\Http\Controllers\Dashboard\PostController;
 //create route for dashboard all routes
 // this case is more easy to use but we need to use all the routes
 Route::resource('post', PostController::class);
+Route::resource('category', CategoryController::class);
+
 
 //create route for dashboard all routes includes in one resource its like the above
 // but we can use only the routes that we need or we can use all of them
