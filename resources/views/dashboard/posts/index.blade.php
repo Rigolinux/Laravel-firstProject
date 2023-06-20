@@ -19,7 +19,7 @@
             <tr>
                 <td>{{$p->id}}</td>
                 <td>{{$p->title}}</td>
-                <td></td>
+                <td>{{$p->category->name}}</td>
                 <td>{{$p->posted}}</td>
                 <td>
                     <a href="{{route('post.show',$p->id)}}">Mostrar</a>

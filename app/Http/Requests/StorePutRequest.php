@@ -22,15 +22,17 @@ class StorePutRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public static function rules()
+    public  function rules()
     {
+  
         return [
             'title' => 'required|min:5|max:255',
-            //'slug' => 'min:5|max:255|unique:posts,slug',
+            'slug' => "min:5|max:255|unique:posts,slug,".$this->post->id,
             'content' => 'required|min:5',
             'category_id' => 'required|integer',
             'posted' => 'required',
             'description' => 'required',
+            'image' => 'image|mimes:jpg,jpeg,png|max:2048',
             //
         ];
     }

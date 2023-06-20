@@ -102,7 +102,27 @@ class PostController extends Controller
      */
     public function update(StorePutRequest $request, Post $post)
     {
-        $post->update($request->validated());
+
+       // dd($request->validated());
+         $data = $request->validated();
+        if(isset( $data['image'])){
+      
+            //dd($request->validated()['image']->hashName());
+           $data["image"] = $filename = time().'.'.$data['image']->extension();
+
+           // dd($filename);
+
+            $request->image->move(public_path('images'),$filename);
+
+          
+        }
+      
+
+        $post->update($data);
+
+        //flash session message
+     //   $request->session()->flash('status','Post updated successfully');
+
         return to_route('post.index');
         
     }

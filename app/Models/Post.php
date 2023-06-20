@@ -13,4 +13,10 @@ class Post extends Model
   // its like a white list and necessary to use the create method or can be fill manually
   protected $fillable = ['title','content','category_id','description','image','posted','slug'];
     
+  // category_id is the foreign key and belongs to Category
+  // the next function is to define the relationship between Post and Category
+  public function category()
+  {
+    return $this->belongsTo(Category::class);
+  }
 }

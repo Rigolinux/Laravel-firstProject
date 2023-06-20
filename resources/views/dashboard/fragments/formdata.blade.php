@@ -37,3 +37,8 @@ value="{{ old('description',$post->description)}}"
     {{old('posted',$post->posted) == 'no' ? 'selected': ''}}
     value="no">No</option>
 </select>
+
+@if (@isset($task) && $task == 'edit')
+    <label for="">Images</label>
+    <input type="file" name="image" >
+@endif
