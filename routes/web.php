@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\PostController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Models\Category;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,44 @@ use App\Models\Category;
 
 //create route for dashboard all routes
 // this case is more easy to use but we need to use all the routes
-Route::resource('post', PostController::class);
-Route::resource('category', CategoryController::class);
+
+
+//route test with middleware
+Route::middleware([App\Http\Middleware\Testmiddleware::class])->group(function(){
+    Route::get('/test', function () {
+        return view('welcome');
+    });
+
+});	
+
+
+// routes bt prefix
+Route::group(['prefix' => 'dashboard'], function () {
+   // Route::resource('post', PostController::class);
+   //Route::resource('category', CategoryController::class);
+
+   // you can concat the resource 2 coulb be like this
+    Route::resource([
+        'post' => PostController::class,
+        'category' => CategoryController::class
+    ]);
+
+    // and i can elimite route with only or except
+    //Route::resource('post', PostController::class)->only(['index','show']);
+    //Route::resource('post', PostController::class)->except(['index','show']);
+    
+});
+
+
+// create a group of routes
+/* Route::controller(PostController::class)->group(function(){
+    Route::get('post', [PostController::class, 'index'])->name('post.index');
+    Route::get('post/{post}', [PostController::class, 'show'])->name('post.show');
+    Route::get('post/create',[PostController::class, 'show'])->name('post.create');
+    Route::post('post',[PostController::class, 'store'])->name('post.store');
+    Route::put('post/{post}',[PostController::class, 'update'])->name('post.update');
+    Route::delete('post/{post}',[PostController::class, 'update'])->name('post.delete');
+}) */
 
 
 //create route for dashboard all routes includes in one resource its like the above
